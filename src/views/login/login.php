@@ -122,7 +122,7 @@
     </script>
 
     <!-- form.js utiliza a constante toastWarning  -->
-    <script type="text/javascript" src="/validate/form.js"></script>
+    <script type="text/javascript" src="<?= URL_CDN; ?>/validate/form.js"></script>
 
 
     <script>
