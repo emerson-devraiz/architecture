@@ -1,2 +1,2 @@
-# archtecture
+# Architecture
 Arquitetura inicial para projetos
