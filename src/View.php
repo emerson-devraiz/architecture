@@ -15,7 +15,7 @@ class View
 
     public function redirect(string $view): void
     {
-        header('Location: ' . $view);
+        header('Location: /' . $view);
         exit;
     }
 }

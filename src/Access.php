@@ -17,11 +17,11 @@ class Access
 
     public function validate()
     {
-        if (isset($_COOKIE['token-panel']) === false) {
+        if (isset($_COOKIE['token']) === false) {
             $this->block('toast-danger', 'Acesso negado!');
         }
 
-        if ($_COOKIE['token-panel'] !== $_SESSION['token-panel']) {
+        if ($_COOKIE['token'] !== $_SESSION['token']) {
             $this->block('toast-warning', 'Token inválido!');
         }
 
