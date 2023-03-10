@@ -1,6 +1,6 @@
 <?php
 
-namespace ZAP5\valueobjects;
+namespace architecture\valueobjects;
 
 class Email
 {

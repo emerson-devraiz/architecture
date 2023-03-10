@@ -24,42 +24,64 @@
     <link href="<?= URL_CDN; ?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<?= URL_CDN; ?>/bootstrap/icons/font/bootstrap-icons.css" rel="stylesheet" type="text/css">
 
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+
     <style>
         body {
+            display: flex;
             min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
         }
     </style>
 
-    <link href="/css/custom.css" rel="stylesheet" type="text/css">
-
 </head>
 
-<body class="d-flex align-items-center">
-
-    <div class="container-fluid d-flex justify-content-center">
-        <div class="card" style="width: 25rem;">
-            <div class="card-header text-center">
-                <h2>Login</h2>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+        <div class="container-fluid pe-0">
+            <a class="navbar-brand fs-4" href="#"><i class="bi bi-whatsapp"></i></a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">HOME</a>
+                    </li>
+                </ul>
             </div>
-            <form id="formLogin" action="/login/auth" method="post" autocomplete="off">
-                <div class="card-body">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control email" id="email" name="email" obrigatorio="true" nome-validar="E-mail" placeholder="Digite seu E-mail" value="emerson@devraiz.com.br">
-                        <label for="email">E-mail</label>
-                    </div>
-                    <div class="input-group">
-                        <div class="form-floating">
-                            <input type="password" class="form-control" id="password" name="password" obrigatorio="true" nome-validar="Senha" placeholder="Digite sua senha" value="devraiz">
-                            <label for="password">Senha</label>
-                        </div>
-                        <span id="password-addon" class="input-group-text" style="cursor: pointer;" onclick="passwordAddon(this)"><i class="bi bi-eye"></i></span>
-                    </div>
-                    <div class="mt-3 text-end">
-                        <button id="btnAcessar" name="btnAcessar" type="submit" class="btn btn-primary">ACESSAR</button>
-                    </div>
-                </div>
-            </form>
+
+            <div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link fs-3" href="/logout" style="width: 70px; text-align: center; padding-left: 20px;">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
+
+    <main>
+        <div class="container-fluid">
+            <?php require '../src/views/' . $view . '.php'; ?>
+        </div>
+    </main>
+
+    <div class="container-fluid">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <!-- <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"><img src="<?= URL_CDN; ?>/images/logo.png" style="height: 35px;" alt=""></a> -->
+                <span class="text-muted">© <?= YEAR; ?> devRaiz - Desenvolvimento de Software</span>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-muted fs-4" href="#"><i class="bi bi-instagram"></i></li>
+                <li class="ms-3"><a class="text-muted fs-4" href="#"><i class="bi bi-facebook"></i></a></li>
+            </ul>
+        </footer>
     </div>
 
     <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -104,6 +126,9 @@
 
     <script type="text/javascript" src="<?= URL_CDN; ?>/jQuery/jquery.js"></script>
     <script type="text/javascript" src="<?= URL_CDN; ?>/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="<?= URL_CDN; ?>/mask/mask.min.js"></script>
+    <script type="text/javascript" src="<?= URL_CDN; ?>/mask/maskMoney.js"></script>
+    <script type="text/javascript" src="<?= URL_CDN; ?>/mask/Masks.js"></script>
 
     <script>
         const divToastDanger = document.getElementById('div-toast-danger');
@@ -117,27 +142,10 @@
         const toastInfo = new bootstrap.Toast(divToastInfo);
     </script>
 
-    <script>
-        var submited = false;
-    </script>
-
     <!-- form.js utiliza a constante toastWarning  -->
     <script type="text/javascript" src="<?= URL_CDN; ?>/validate/form.js"></script>
 
-
     <script>
-        function passwordAddon(input) {
-            let e = document.getElementById("password");
-
-            if (e.type === "password") {
-                e.type = "text";
-                input.innerHTML = '<i class="bi bi-eye-slash"></i>';
-            } else {
-                e.type = "password";
-                input.innerHTML = '<i class="bi bi-eye"></i>';
-            }
-        }
-
         <?php if (isset($data['toast-danger'])) : ?>
 
             $('#div-toast-danger #toast-msg').html('<?= $data['toast-danger']; ?>');
@@ -166,8 +174,6 @@
 
         <?php endif; ?>
     </script>
-
-
 
 </body>
 

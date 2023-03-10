@@ -11,10 +11,9 @@ require '../src/config.php';
 $cookie = new Cookie();
 $view   = new View();
 
-$httpRequest = $_SERVER['REQUEST_METHOD'];
-
 $router = new Router();
 $route  = $router->getRoute();
+$action = $router->getAction();
 
 $pathRoutes = '../routes/' . $route . '.php';
 
@@ -25,7 +24,7 @@ if (file_exists($pathRoutes) === false) {
 
 $routes = require $pathRoutes;
 
-if (array_key_exists($httpRequest, $routes) === false) {
+if (array_key_exists($action, $routes) === false) {
     $cookie->set(['name' => 'toast-warning', 'value' => 'Requisição inválida!']);
     $view->redirect('login');
 }
@@ -33,11 +32,11 @@ if (array_key_exists($httpRequest, $routes) === false) {
 session_start();
 
 if ($router->isLogin() === false) {
-    $access = new Access($cookie, $view );
+    $access = new Access($cookie, $view);
     $access->validate();
 }
 
-$class = $routes[$httpRequest];
+$class = $routes[$action];
 
 $factory    = new $class();
 $controller = $factory->manufacture();
