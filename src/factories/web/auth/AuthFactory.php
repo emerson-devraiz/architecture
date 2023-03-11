@@ -5,6 +5,7 @@ namespace architecture\factories\web\auth;
 use architecture\app\web\View;
 use architecture\controllers\web\auth\AuthController;
 use architecture\domain\auth\Auth;
+use architecture\Filter;
 use architecture\handlers\web\auth\AuthHandler;
 use architecture\infra\repositories\auth\AuthRepository;
 use architecture\infra\repositories\MariaDB;
@@ -22,7 +23,8 @@ class AuthFactory implements FactoryControllerInterface
         $cipher     = new PasswordHash();
         $handler    = new AuthHandler($repository, $cipher);
         $view       = new View();
+        $filter     = new Filter();
         
-        return new AuthController($auth, $handler, $view);
+        return new AuthController($auth, $handler, $view, $filter);
     }
 }
