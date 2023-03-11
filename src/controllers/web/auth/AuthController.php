@@ -5,38 +5,30 @@ namespace architecture\controllers\web\auth;
 use architecture\app\web\View;
 use architecture\Cookie;
 use architecture\domain\auth\Auth;
+use architecture\Filter;
 use architecture\handlers\web\auth\AuthHandler;
 use architecture\interfaces\ControllerInterface;
 use architecture\Jwt;
 use architecture\Security;
-
-function filterWhatsapp(string $whatsapp): string
-{
-    $filter = str_replace('+', '', $whatsapp);
-    $filter = str_replace('(', '', $filter);
-    $filter = str_replace(')', '', $filter);
-    $filter = str_replace('-', '', $filter);
-    $filter = str_replace(' ', '', $filter);
-
-    return $filter;
-}
 
 class AuthController implements ControllerInterface
 {
     private Auth $auth;
     private AuthHandler $handler;
     private View $view;
+    private Filter $filter;
 
-    public function __construct(Auth $auth, AuthHandler $handler, View $view)
+    public function __construct(Auth $auth, AuthHandler $handler, View $view, Filter $filter)
     {
         $this->handler = $handler;
         $this->auth    = $auth;
         $this->view    = $view;
+        $this->filter = $filter;
     }
 
     public function run(): void
     {
-        $whatsapp = filterWhatsapp($_POST['whatsapp']);
+        $whatsapp = $this->filter->whatsapp($_POST['whatsapp']);
         $password = $_POST['password'];
 
         $this->auth->setIdentifyer($whatsapp);
