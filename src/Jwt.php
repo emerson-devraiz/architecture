@@ -13,7 +13,6 @@ class Jwt
 
         $this->addPayload('iss', JWT_ISS);
         $this->addPayload('sub', JWT_SUB);
-        $this->addPayload('iat', TIMESTAMP);
     }
 
     public function addHeader(string $key, string $value): void
@@ -42,12 +41,23 @@ class Jwt
         return $token;
     }
 
+    public function parse(string $token): array
+    {
+        $vector = explode('.', $token);
+
+        $headers   = json_decode($this->decode($vector[0]));
+        $payload   = json_decode($this->decode($vector[1]));
+        $signature = $vector[2];
+
+        return ['headers' => $headers, 'payload' => $payload, 'signature' => $signature];
+    }
+
     private function encode(string $payload): string
     {
         return str_replace('=', '', strtr(base64_encode($payload), '+/', '-_'));
     }
 
-    public function decode(string $payload): string
+    private function decode(string $payload): string
     {
         $remainder = strlen($payload) % 4;
 
